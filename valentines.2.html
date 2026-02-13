@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi Valentín? ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff69b4, #ffb6c1); /* Pink gradient */
+            color: #d32f2f; /* Red text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating red hearts background */
+        .heart {
+            position: absolute;
+            color: #ff0000;
+            font-size: 2rem;
+            animation: float 6s infinite linear;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* Jumping bunny */
+        .bunny {
+            position: absolute;
+            bottom: 10%;
+            right: 10%;
+            font-size: 3rem;
+            animation: jump 1s infinite ease-in-out;
+            z-index: 5;
+        }
+
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Container for the question and buttons */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        button {
+            font-size: 1.5rem;
+            padding: 1rem 2rem;
+            margin: 0 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        #yes-btn {
+            background: #ff69b4;
+            color: white;
+        }
+
+        #yes-btn:hover {
+            background: #ff1493;
+            transform: scale(1.1);
+        }
+
+        #no-btn {
+            background: #d32f2f;
+            color: white;
+        }
+
+        #no-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.1);
+        }
+
+        /* Yes animation: Bursting hearts */
+        .hearts-burst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .heart-burst {
+            position: absolute;
+            color: #ff0000;
+            font-size: 3rem;
+            animation: burst 2s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% { opacity: 1; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
+            100% { opacity: 0; transform: scale(2) rotate(360deg) translateY(-200px); }
+        }
+
+        /* Hidden initially */
+        .hidden {
+            display: none;
+        }
+
+        /* Rejection message */
+        .rejection {
+            font-size: 2rem;
+            color: #b71c1c;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+    <div class="heart" style="left: 20%; animation-delay: 1s;">❤️</div>
+    <div class="heart" style="left: 30%; animation-delay: 2s;">❤️</div>
+    <div class="heart" style="left: 40%; animation-delay: 3s;">❤️</div>
+    <div class="heart" style="left: 50%; animation-delay: 4s;">❤️</div>
+    <div class="heart" style="left: 60%; animation-delay: 5s;">❤️</div>
+    <div class="heart" style="left: 70%; animation-delay: 6s;">❤️</div>
+    <div class="heart" style="left: 80%; animation-delay: 7s;">❤️</div>
+    <div class="heart" style="left: 90%; animation-delay: 8s;">❤️</div>
+
+    <!-- Jumping bunny -->
+    <div class="bunny">🐰</div>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1>¿Quieres ser mi Valentín caches? 😁❤️</h1>
+        <button id="yes-btn">Chipi</button>
+        <button id="no-btn">no (ve a ver😡)</button>
+        <div id="rejection" class="rejection hidden">vaya a comer mucha caquita cerotillo 😡</div>
+    </div>
+
+    <!-- Burst hearts container (hidden initially) -->
+    <div id="hearts-burst" class="hearts-burst hidden"></div>
+
+    <script>
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const rejection = document.getElementById('rejection');
+        const heartsBurst = document.getElementById('hearts-burst');
+
+        // On "Chipi" click: Trigger heart burst animation and update message
+        yesBtn.addEventListener('click', () => {
+            // Hide buttons and show rejection (in case it was shown)
+            rejection.classList.add('hidden');
+            // Create bursting hearts
+            heartsBurst.classList.remove('hidden');
+            for (let i = 0; i < 20; i++) { // 20 hearts for a nice burst
+                const heart = document.createElement('div');
+                heart.className = 'heart-burst';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 0.5 + 's';
+                heartsBurst.appendChild(heart);
+            }
+            // Change the question to the new yes message
+            document.querySelector('h1').textContent = 'yupiiiii, nos vemos mañana a las 5-6 en mi casita 😘, y hoy tmb obvio ;)';
+            // Hide buttons after animation
+            setTimeout(() => {
+                yesBtn.style.display = 'none';
+                noBtn.style.display = 'none';
+            }, 2000);
+        });
+
+        // On "no" click: Show rejection message
+        noBtn.addEventListener('click', () => {
+            rejection.classList.remove('hidden');
+            // Optionally, make the "no" button move away playfully (chase effect)
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = Math.random() * 80 + '%';
+            noBtn.style.top = Math.random() * 80 + '%';
+        });
+    </script>
+</body>
+</html>
+     
